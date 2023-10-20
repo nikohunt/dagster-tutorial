@@ -1,0 +1,11 @@
+[32m2023-10-20 16:37:28 +0100[0m - dagster - [34mDEBUG[0m - __ASSET_JOB - d39b0d8e-b092-40cf-bae2-dd5d6cf87920 - 49829 - LOGS_CAPTURED - Started capturing logs in process (pid: 49829).
+[32m2023-10-20 16:37:28 +0100[0m - dagster - [34mDEBUG[0m - __ASSET_JOB - d39b0d8e-b092-40cf-bae2-dd5d6cf87920 - 49829 - topstories - STEP_START - Started execution of step "topstories".
+[32m2023-10-20 16:37:33 +0100[0m - dagster - [34mINFO[0m - __ASSET_JOB - d39b0d8e-b092-40cf-bae2-dd5d6cf87920 - topstories - Got 20 items so far.
+[32m2023-10-20 16:37:39 +0100[0m - dagster - [34mINFO[0m - __ASSET_JOB - d39b0d8e-b092-40cf-bae2-dd5d6cf87920 - topstories - Got 40 items so far.
+[32m2023-10-20 16:37:44 +0100[0m - dagster - [34mINFO[0m - __ASSET_JOB - d39b0d8e-b092-40cf-bae2-dd5d6cf87920 - topstories - Got 60 items so far.
+[32m2023-10-20 16:37:52 +0100[0m - dagster - [34mINFO[0m - __ASSET_JOB - d39b0d8e-b092-40cf-bae2-dd5d6cf87920 - topstories - Got 80 items so far.
+[32m2023-10-20 16:37:57 +0100[0m - dagster - [34mINFO[0m - __ASSET_JOB - d39b0d8e-b092-40cf-bae2-dd5d6cf87920 - topstories - Got 100 items so far.
+[32m2023-10-20 16:37:57 +0100[0m - dagster - [34mDEBUG[0m - __ASSET_JOB - d39b0d8e-b092-40cf-bae2-dd5d6cf87920 - 49829 - topstories - STEP_OUTPUT - Yielded output "result" of type "Nothing". (Type check passed).
+[32m2023-10-20 16:37:57 +0100[0m - dagster - [34mDEBUG[0m - __ASSET_JOB - d39b0d8e-b092-40cf-bae2-dd5d6cf87920 - 49829 - topstories - ASSET_MATERIALIZATION - Materialized value topstories.
+[32m2023-10-20 16:37:57 +0100[0m - dagster - [34mDEBUG[0m - __ASSET_JOB - d39b0d8e-b092-40cf-bae2-dd5d6cf87920 - 49829 - topstories - HANDLED_OUTPUT - Handled output "result" using IO manager "io_manager"
+[32m2023-10-20 16:37:57 +0100[0m - dagster - [34mDEBUG[0m - __ASSET_JOB - d39b0d8e-b092-40cf-bae2-dd5d6cf87920 - 49829 - topstories - STEP_SUCCESS - Finished execution of step "topstories" in 29.01s.
