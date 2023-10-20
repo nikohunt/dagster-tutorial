@@ -2,8 +2,10 @@ import json
 import os
 
 import requests
+from dagster import asset
 
 
+@asset
 def topstory_ids() -> None:
     newstories_url = "https://hacker-news.firebaseio.com/v0/topstories.json"
     top_new_story_ids = requests.get(newstories_url).json()[:100]
