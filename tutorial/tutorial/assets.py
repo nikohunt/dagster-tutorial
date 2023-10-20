@@ -1,9 +1,17 @@
+import base64
 import json
 import os
+from io import BytesIO
 
+import matplotlib.pyplot as plt
 import pandas as pd
 import requests
-from dagster import asset, get_dagster_logger
+from dagster import (
+    AssetExecutionContext,
+    MetadataValue,
+    asset,
+    get_dagster_logger,
+)
 
 
 @asset
@@ -16,8 +24,8 @@ def topstory_ids() -> None:
         json.dump(top_new_story_ids, f)
 
 
-@asset(deps=[topstory_ids])  # this asset is dependent on topstory_ids
-def topstories() -> None:
+@asset(deps=[topstory_ids])
+def topstories(context: AssetExecutionContext) -> None:
     logger = get_dagster_logger()
 
     with open("data/topstory_ids.json", "r") as f:
@@ -35,6 +43,13 @@ def topstories() -> None:
 
     df = pd.DataFrame(results)
     df.to_csv("data/topstories.csv")
+
+    context.add_output_metadata(
+        metadata={
+            "num_records": len(df),  # Metadata can be any key-value pair
+            "preview": MetadataValue.md(df.head().to_markdown()),
+        }
+    )
 
 
 @asset(deps=[topstories])
