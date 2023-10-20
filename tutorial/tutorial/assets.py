@@ -53,7 +53,7 @@ def topstories(context: AssetExecutionContext) -> None:
 
 
 @asset(deps=[topstories])
-def most_frequent_words() -> None:
+def most_frequent_words(context: AssetExecutionContext) -> None:
     stopwords = [
         "a",
         "the",
@@ -89,5 +89,25 @@ def most_frequent_words() -> None:
         )[:25]
     }
 
+    # Make a bar chart of the top 25 words
+    plt.figure(figsize=(10, 6))
+    plt.bar(list(top_words.keys()), list(top_words.values()))
+    plt.xticks(rotation=45, ha="right")
+    plt.title("Top 25 Words in Hacker News Titles")
+    plt.tight_layout()
+
+    # Convert the image to a saveable format
+    buffer = BytesIO()
+    plt.savefig(buffer, format="png")
+    image_data = base64.b64encode(buffer.getvalue())
+
+    # Convert the image to Markdown to preview it within Dagster
+    md_content = f"![img](data:image/png;base64,{image_data.decode()})"
+
     with open("data/most_frequent_words.json", "w") as f:
         json.dump(top_words, f)
+
+    # Attach the Markdown content as metadata to the asset
+    context.add_output_metadata(
+        metadata={"plot": MetadataValue.md(md_content)}
+    )
