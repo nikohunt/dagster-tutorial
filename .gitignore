@@ -180,3 +180,4 @@ scripts/.build
 tutorial/data
 tmp*
 tutorial/__pycache__
+tutorial/tutorial/__init__.py
