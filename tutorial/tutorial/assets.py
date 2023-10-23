@@ -23,7 +23,7 @@ def topstory_ids() -> List:
     return top_new_story_ids
 
 
-@asset
+@asset(group_name="hackernews", io_manager_key="database_io_manager")
 def topstories(
     context: AssetExecutionContext,
     topstory_ids: List,
