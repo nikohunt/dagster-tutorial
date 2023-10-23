@@ -1,6 +1,7 @@
 from dagster import (
     AssetSelection,
     Definitions,
+    EnvVar,
     FilesystemIOManager,
     ScheduleDefinition,
     define_asset_job,
@@ -31,7 +32,9 @@ io_manager = FilesystemIOManager(
 
 database_io_manager = DuckDBPandasIOManager(database="analytics.hackernews")
 
-datagen = DataGeneratorResource(num_days=365)
+datagen = DataGeneratorResource(
+    num_days=EnvVar.int("HACKERNEWS_NUM_DAYS_WINDOW")
+)
 
 defs = Definitions(
     assets=all_assets,
