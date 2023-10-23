@@ -31,7 +31,7 @@ io_manager = FilesystemIOManager(
 
 database_io_manager = DuckDBPandasIOManager(database="analytics.hackernews")
 
-datagen = DataGeneratorResource()
+datagen = DataGeneratorResource(num_days=365)
 
 defs = Definitions(
     assets=all_assets,
