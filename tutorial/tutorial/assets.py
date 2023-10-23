@@ -1,7 +1,6 @@
 import base64
-import json
 from io import BytesIO
-from typing import List
+from typing import Dict, List
 
 import matplotlib.pyplot as plt
 import pandas as pd
@@ -53,7 +52,10 @@ def topstories(
 
 
 @asset(deps=[topstories])
-def most_frequent_words(context: AssetExecutionContext) -> None:
+def most_frequent_words(
+    context: AssetExecutionContext,
+    topstories: pd.DataFrame,
+) -> Dict:
     stopwords = [
         "a",
         "the",
@@ -67,8 +69,6 @@ def most_frequent_words(context: AssetExecutionContext) -> None:
         "on",
         "is",
     ]
-
-    topstories = pd.read_csv("data/topstories.csv")
 
     # loop through the titles and count the frequency of each word
     word_counts = {}
@@ -104,10 +104,9 @@ def most_frequent_words(context: AssetExecutionContext) -> None:
     # Convert the image to Markdown to preview it within Dagster
     md_content = f"![img](data:image/png;base64,{image_data.decode()})"
 
-    with open("data/most_frequent_words.json", "w") as f:
-        json.dump(top_words, f)
-
     # Attach the Markdown content as metadata to the asset
     context.add_output_metadata(
         metadata={"plot": MetadataValue.md(md_content)}
     )
+
+    return top_words
