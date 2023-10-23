@@ -6,6 +6,7 @@ from dagster import (
     define_asset_job,
     load_assets_from_modules,
 )
+from dagster_duckdb_pandas import DuckDBPandasIOManager
 
 from . import assets
 
@@ -27,10 +28,14 @@ io_manager = FilesystemIOManager(
     base_dir="data",  # Path is built relative to where `dagster dev` is run
 )
 
+database_io_manager = DuckDBPandasIOManager(database="analytics.hackernews")
+
+
 defs = Definitions(
     assets=all_assets,
     schedules=[hackernews_schedule],
     resources={
         "io_manager": io_manager,
+        "database_io_manager": database_io_manager,
     },
 )
