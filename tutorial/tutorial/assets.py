@@ -1,7 +1,7 @@
 import base64
 import json
-import os
 from io import BytesIO
+from typing import List
 
 import matplotlib.pyplot as plt
 import pandas as pd
@@ -16,6 +16,7 @@ from dagster import (
 
 @asset
 def topstory_ids() -> None:
+    # sourcery skip: inline-immediately-returned-variable
     newstories_url = "https://hacker-news.firebaseio.com/v0/topstories.json"
     top_new_story_ids = requests.get(newstories_url).json()[:100]
 
@@ -23,12 +24,12 @@ def topstory_ids() -> None:
     return top_new_story_ids
 
 
-@asset(deps=[topstory_ids])
-def topstories(context: AssetExecutionContext) -> None:
+@asset
+def topstories(
+    context: AssetExecutionContext,
+    topstory_ids: List,
+) -> pd.DataFrame:  # modify the return type signature
     logger = get_dagster_logger()
-
-    with open("data/topstory_ids.json", "r") as f:
-        topstory_ids = json.load(f)
 
     results = []
     for item_id in topstory_ids:
@@ -41,7 +42,6 @@ def topstories(context: AssetExecutionContext) -> None:
             logger.info(f"Got {len(results)} items so far.")
 
     df = pd.DataFrame(results)
-    df.to_csv("data/topstories.csv")
 
     context.add_output_metadata(
         metadata={
@@ -49,6 +49,7 @@ def topstories(context: AssetExecutionContext) -> None:
             "preview": MetadataValue.md(df.head().to_markdown()),
         }
     )
+    return df
 
 
 @asset(deps=[topstories])
