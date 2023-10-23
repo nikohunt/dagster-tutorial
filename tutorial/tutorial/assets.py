@@ -14,7 +14,7 @@ from dagster import (
 
 
 @asset
-def topstory_ids() -> None:
+def topstory_ids() -> List:
     # sourcery skip: inline-immediately-returned-variable
     newstories_url = "https://hacker-news.firebaseio.com/v0/topstories.json"
     top_new_story_ids = requests.get(newstories_url).json()[:100]
