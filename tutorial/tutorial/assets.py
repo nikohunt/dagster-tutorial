@@ -51,7 +51,7 @@ def topstories(
     return df
 
 
-@asset(deps=[topstories])
+@asset
 def most_frequent_words(
     context: AssetExecutionContext,
     topstories: pd.DataFrame,
