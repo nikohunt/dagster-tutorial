@@ -101,6 +101,7 @@ class DataGenerator:
         )
 
     def get_signups_for_date(self, date: datetime) -> Sequence[Signup]:
+        # sourcery skip: for-index-underscore
         date_to_seed = date.strftime("%Y%m%d")
         Faker.seed(date_to_seed)
         self.random = Random(date_to_seed)
