@@ -175,3 +175,7 @@ scripts/.build
 
 # dbt .user files
 .user.yml
+
+# cache and tempt
+tmp*
+tutorial/__pycache__
