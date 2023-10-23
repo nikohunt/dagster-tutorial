@@ -8,8 +8,10 @@ from faker import Faker
 from pydantic import Field
 
 # This file holds a resource you'll use in the tutorial
-# You won't need to use this file/class until the Connecting to External Services section of the tutorial (Part 8).
-# Once you are on Part 8, you will the contents of this file, but you don't need to understand the underlying code.
+# You won't need to use this file/class until the Connecting to External
+# Services section of the tutorial (Part 8).
+# Once you are on Part 8, you will the contents of this file, but you don't
+# need to understand the underlying code.
 
 
 # To the curious user: This is the underlying code to generate the signups
@@ -29,7 +31,9 @@ class Signup:
     registered_at: datetime
 
     def to_dict(self) -> dict:
-        props = {k: v for k, v in asdict(self).items() if not k.startswith("_")}
+        props = {
+            k: v for k, v in asdict(self).items() if not k.startswith("_")
+        }
         props["registered_at"] = self.registered_at.isoformat()
         return props
 
@@ -69,17 +73,27 @@ class DataGenerator:
         self.random = Random(seed)
 
     def generate_signup(self, date) -> Signup:
-        registered_at = self.fake.date_time_between_dates(date, date + timedelta(days=1))
+        registered_at = self.fake.date_time_between_dates(
+            date, date + timedelta(days=1)
+        )
 
         return Signup(
             name=self.fake.name(),
             email=self.fake.email(),
             country=self.fake.country(),
-            signup_source=self.fake.random_element(["google", "facebook", "twitter", "other"]),
+            signup_source=self.fake.random_element(
+                ["google", "facebook", "twitter", "other"]
+            ),
             referral=self.fake.uri(),
-            signup_purpose=self.fake.random_element(["personal", "business", "education", "other"]),
-            subscription_level=self.fake.random_element(["trial", "free", "premium", "enterprise"]),
-            payment_method=self.fake.random_element(["credit_card", "paypal", "check", "other"]),
+            signup_purpose=self.fake.random_element(
+                ["personal", "business", "education", "other"]
+            ),
+            subscription_level=self.fake.random_element(
+                ["trial", "free", "premium", "enterprise"]
+            ),
+            payment_method=self.fake.random_element(
+                ["credit_card", "paypal", "check", "other"]
+            ),
             sso_id=self.fake.uuid4(),
             email_verified=self.fake.boolean(),
             enabled=self.fake.boolean(),
@@ -129,7 +143,8 @@ class DataGeneratorResource(ConfigurableResource):
     Examples:
         .. code-block:: python
             from dagster import Definitions, asset
-            from dagster_data_generator import DataGeneratorResource, DataGeneratorConfig
+            from dagster_data_generator import DataGeneratorResource,
+            DataGeneratorConfig
 
             @asset
             def my_table(data_gen: DataGeneratorConfig):
@@ -143,13 +158,15 @@ class DataGeneratorResource(ConfigurableResource):
 
     seed: int = Field(
         description=(
-            "Seed for the random number generator. If not provided, a static seed will be used."
+            """Seed for the random number generator. If not provided, a static
+            seed will be used."""
         ),
         default=0,
     )
 
     num_days: int = Field(
-        description="Number of days to generate data for. Defaults to 7", default=7
+        description="Number of days to generate data for. Defaults to 7",
+        default=7,
     )
 
     @property
